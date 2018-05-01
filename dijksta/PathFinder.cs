@@ -37,8 +37,9 @@ namespace dijksta
             ReadMap(mapfile);
             ReadDest(destsfile);
             findRoute();
-
-            return 1;
+            makePath();
+            WritePath();
+            return 0;
         }
 
         void findRoute()
@@ -90,29 +91,9 @@ namespace dijksta
 
         void makePath()
         {
-            int deltaAddCost(int prev, int addDest, int next) => (dest[prev].cost[addDest] + dest[addDest].cost[next]) - dest[prev].cost[next];
-            int searchShortPath(int prev, int next, int inv = 1)
-            {
-                int minCost = int.MaxValue;
-                int mDest = startpoint;
-                foreach (int i in yetList)
-                {
-                    if (i != prev && i != next)
-                    {
-                        var addCost = (dest[prev].cost[i] + dest[next].cost[i]) * inv;
-                        if (addCost < minCost ||
-                            (addCost == minCost && dest[startpoint].cost[i] > dest[startpoint].cost[mDest]))
-                        {
-                            minCost = addCost;
-                            mDest = i;
-                        }
-                    }
-                }
-                return mDest;
-            }
 
             path = new List<int>();
-            List<int> yetList = new List<int>();
+            var yetList = new List<int>();
             for (int i = 0; i < dest.Length; i++) if (i != startpoint) yetList.Add(i);
             path.Add(startpoint);
             path.Add(startpoint);
@@ -135,6 +116,25 @@ namespace dijksta
                     }
                 }
                 path.Insert(minPlace, minDest);
+            }
+
+            int deltaAddCost(int prev, int addDest, int next) => (dest[prev].cost[addDest] + dest[addDest].cost[next]) - dest[prev].cost[next];
+
+            int searchShortPath(int prev, int next, int inv = 1)
+            {
+                int minCost = int.MaxValue;
+                int mDest = startpoint;
+                foreach (int i in yetList)
+                {
+                    var addCost = (dest[prev].cost[i] + dest[next].cost[i]) * inv;
+                    if (addCost < minCost ||
+                        (addCost == minCost && dest[startpoint].cost[i] > dest[startpoint].cost[mDest]))
+                    {
+                        minCost = addCost;
+                        mDest = i;
+                    }
+                }
+                return mDest;
             }
         }
 
