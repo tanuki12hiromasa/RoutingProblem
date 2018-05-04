@@ -39,7 +39,7 @@ namespace dijksta
             ReadMap(mapfile);
             ReadDest(destsfile);
             findRoute();
-            makePath();
+            makePath(dest, startpoint, out path);
             WritePath();
             return 0;
         }
@@ -90,7 +90,7 @@ namespace dijksta
             WriteRoute();
         }
 
-        void makePath()
+        virtual protected void makePath(Destination[] dest,int startpoint,out List<int> path)
         {
 
             path = new List<int>();
