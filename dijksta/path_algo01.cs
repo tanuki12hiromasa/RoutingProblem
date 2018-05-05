@@ -55,6 +55,7 @@ namespace dijksta
                     {
                         fardests.Clear();
                         fardests.Add(i);
+                        maxcost = dest[startpoint].cost[i];
                     }
                     else if (dest[startpoint].cost[i] == maxcost)
                     {

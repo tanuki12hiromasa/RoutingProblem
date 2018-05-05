@@ -16,9 +16,10 @@ namespace dijksta
             _path.Add(startpoint);
             _path.Add(startpoint);
             yetList.Remove(startpoint);
+            int recentAdd = startpoint;
             while (yetList.Count != 0)
             {
-                var fardests = farDests();
+                var fardests = farDests(recentAdd);
                 int minCost = int.MaxValue;
                 int mDest=startpoint;
                 foreach(int d in fardests)
@@ -40,28 +41,31 @@ namespace dijksta
                         minCost = deltaAddCost(_path[i], mDest, _path[i + 1]);
                     }
                 }
+                Console.WriteLine("add:" + dest[mDest].name);
                 _path.Insert(mi + 1, mDest);
                 yetList.Remove(mDest);
+                recentAdd = mDest;
             }
             path = _path;
 
-            List<int> farDests()
+            List<int> farDests(int fromDest)
             {
                 var fardests = new List<int>();
                 int maxcost = int.MinValue;
                 foreach(int i in yetList)
                 {
-                    if (dest[startpoint].cost[i] > maxcost)
+                    if (dest[fromDest].cost[i] > maxcost)
                     {
                         fardests.Clear();
                         fardests.Add(i);
+                        maxcost = dest[fromDest].cost[i];
                     }
-                    else if (dest[startpoint].cost[i] == maxcost)
+                    else if (dest[fromDest].cost[i] == maxcost)
                     {
                         fardests.Add(i);
                     }
                 }
-
+                foreach (int d in fardests) Console.Write(d + " ");
                 return fardests;
             }
 
