@@ -11,6 +11,7 @@ namespace dijksta
         protected override void makePath(Destination[] dest, int startpoint, out List<int> path)
         {
             base.makePath(dest, startpoint, out path);
+            //ノード入れ替えを行う
 
         }
     }
