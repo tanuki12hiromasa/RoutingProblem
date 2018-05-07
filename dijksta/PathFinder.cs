@@ -98,9 +98,9 @@ namespace dijksta
             for (int i = 0; i < dest.Length; i++) if (i != startpoint) yetList.Add(i);
             path.Add(startpoint);
             path.Add(startpoint);
-            var farDest = searchShortPath(startpoint, startpoint, -1);
-            path.Insert(1, farDest);
-            yetList.Remove(farDest);
+            //var farDest = searchShortPath(startpoint, startpoint, -1);
+            //path.Insert(1, farDest);
+            //yetList.Remove(farDest);
             while (yetList.Count > 0)
             {
                 int minCost = int.MaxValue;
