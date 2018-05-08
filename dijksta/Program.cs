@@ -12,7 +12,7 @@ namespace dijksta
         static void Main(string[] args)
         {
             Console.WriteLine(System.IO.Directory.GetCurrentDirectory());
-            var pf = new path_algo02(width, hight);
+            var pf = new path_algo03(width, hight);
             pf.ex(mapfile, destfile);
         }
 
