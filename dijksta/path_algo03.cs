@@ -18,24 +18,27 @@ namespace dijksta
             bool update = true;
             while (update)
             {
+                update = false;
                 for(int i = 1; i < _path.Count - 1; i++)
                 {
                     var cDest = _path[i];
                     for(int j = 0; j < _path.Count - 1; j++)
                     {
-                        if((deltaCost(i-1,i)+deltaCost(i,i+1)+deltaCost(j,j+1)) - (deltaCost(i-1,i+1)+deltaCost(j,i)+deltaCost(i,j+1)) > 0)
-                        {
+                        int deltaCost(int prev, int next) => dest[_path[prev]].cost[_path[next]];
 
+                        if ((deltaCost(i-1,i)+deltaCost(i,i+1)+deltaCost(j,j+1)) - (deltaCost(i-1,i+1)+deltaCost(j,i)+deltaCost(i,j+1)) > 0 && i!=j && i!=j+1 && update == false)
+                        {
+                            _path.RemoveAt(i);
+                            _path.Insert(j, cDest);
+                            update = true;
                         }
                     }
                 }
-                
-                update = false;
             }
 
             path = _path;
 
-            int deltaCost(int prev, int next) => dest[_path[prev]].cost[next];
+            
         }
     }
 }
