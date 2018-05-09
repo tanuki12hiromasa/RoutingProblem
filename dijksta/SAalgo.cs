@@ -8,8 +8,8 @@ namespace dijksta
     {
         public SAalgo(int width,int height) : base(width, height) { outfile = "SApath.txt"; }
 
-        const double T0 = 100;
-        
+        const double T0 = 1000;
+        const double alpha = 0.99999;
 
         protected override void makePath(Destination[] dest, int startpoint, out List<int> path)
         {
@@ -21,7 +21,7 @@ namespace dijksta
             curpath.Add(startpoint);
 
             var starttime = DateTime.Now;
-            var timelimit = new TimeSpan(0,0,30);
+            var timelimit = new TimeSpan(0,3,30);
             var numofnode = curpath.Count;
             var random = new Random(334);
             Int64 count = 0;
@@ -29,14 +29,14 @@ namespace dijksta
             while (DateTime.Now - starttime < timelimit)
             {
                 var nextpath = new List<int>(curpath);
-                var transpNum =  random.Next(1, numofnode - 2);
-                var transTo = random.Next(1, numofnode - 2);
+                var transpNum =  random.Next(1, numofnode - 1);
+                var transTo = random.Next(1, numofnode - 1);
                 nextpath.RemoveAt(transpNum);
                 nextpath.Insert(transTo, curpath[transpNum]);
                 var deltaE = SumCost(nextpath) - SumCost(curpath);
                 if (deltaE <= 0 || Math.Exp(-deltaE / T) > random.NextDouble())
                     curpath = nextpath;
-                T *= 0.995;
+                T *= alpha;
                 count++;
                 //Console.WriteLine("deltaE:" + deltaE);
             }
