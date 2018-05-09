@@ -24,6 +24,7 @@ namespace dijksta
         List<int> path; //配達順
         int startpoint; //開始点/終着点
         int[] isDest; //その場所がDestかどうか(Destならその番号、違うなら-1)
+        protected string outfile = "betterpath.txt";
 
         public PathFinder(int width,int height)
         {
@@ -220,7 +221,7 @@ namespace dijksta
         {
             try
             {
-                using(var stw = new System.IO.StreamWriter("betterpath.txt"))
+                using(var stw = new System.IO.StreamWriter(outfile))
                 {
                     for(int i = 0; i < path.Count-1; i++)
                     {
